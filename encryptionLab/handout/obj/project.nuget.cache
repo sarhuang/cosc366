@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0mhBs42TriztaoJZBoRGc+9v7XY/V5jz/wk3kAicFpM/CABIdrL3PSzPJHVj1tR8UKyI3NyTbcqI2jnWU7xdOQ==",
+  "dgSpecHash": "7TwiuwNyK3RhBg3TgYvNypr5ZeUN4fm4arrcICHf/XHnl5YuX9u6/7Fo9OFDYBtI6+0m4XmigJEJVUwKDfujgg==",
   "success": true,
-  "projectFilePath": "/workspaces/handout/Echo.csproj",
+  "projectFilePath": "/workspaces/cosc366/encryptionLab/handout/Echo.csproj",
   "expectedPackageFiles": [
     "/home/vscode/.nuget/packages/microsoft.extensions.configuration/7.0.0/microsoft.extensions.configuration.7.0.0.nupkg.sha512",
     "/home/vscode/.nuget/packages/microsoft.extensions.configuration.abstractions/7.0.0/microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",

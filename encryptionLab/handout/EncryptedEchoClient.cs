@@ -16,10 +16,22 @@ internal sealed class EncryptedEchoClient : EchoClientBase {
     /// <inheritdoc />
     public EncryptedEchoClient(ushort port, string address) : base(port, address) { }
 
+
+
+
+
     /// <inheritdoc />
     public override void ProcessServerHello(string message) {
-        // todo: Step 1: Get the server's public key. Decode using Base64.
+        //  todo: Step 1: Get the server's public key. Decode using Base64.
         // Throw a CryptographicException if the received key is invalid.
+        try{
+            var publicKey = Convert.FromBase64String(message);
+            RSA rsaClient = RSA.Create();
+            rsaClient.ImportRSAPublicKey(publicKey, out int keyLength);
+            Console.WriteLine("maybe???EncryptedEchoClient[0] Public key loaded from server hello");
+        }catch(CryptographicException e){
+            Console.WriteLine("Exception caught: {0}", e);
+        }
     }
 
     /// <inheritdoc />

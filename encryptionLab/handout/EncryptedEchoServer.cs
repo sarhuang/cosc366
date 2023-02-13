@@ -14,12 +14,20 @@ internal sealed class EncryptedEchoServer : EchoServerBase {
     internal EncryptedEchoServer(ushort port) : base(port) { }
 
     // todo: Step 1: Generate a RSA key (2048 bits) for the server.
-           
+    RSA rsa = RSA.Create(2048);  
+
+
+
+
+
     /// <inheritdoc />
     public override string GetServerHello() {
-        // todo: Step 1: Send the public key to the client in PKCS#1 format.
+        // todo: Step 1: Send the public key to the client in PKCS#1 format.        
         // Encode using Base64: Convert.ToBase64String
-        return string.Empty;
+        //return string.Empty;
+
+        //Exports the public-key portion of the current key in the PKCS#1 RSAPublicKey format.
+        return Convert.ToBase64String(rsa.ExportRSAPublicKey());        
     }
 
     /// <inheritdoc />

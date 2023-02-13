@@ -757,11 +757,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/workspaces/handout/Echo.csproj",
+      "projectUniqueName": "/workspaces/cosc366/encryptionLab/handout/Echo.csproj",
       "projectName": "Echo",
-      "projectPath": "/workspaces/handout/Echo.csproj",
+      "projectPath": "/workspaces/cosc366/encryptionLab/handout/Echo.csproj",
       "packagesPath": "/home/vscode/.nuget/packages/",
-      "outputPath": "/workspaces/handout/obj/",
+      "outputPath": "/workspaces/cosc366/encryptionLab/handout/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/vscode/.nuget/NuGet/NuGet.Config"
