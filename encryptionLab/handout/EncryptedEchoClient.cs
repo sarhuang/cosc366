@@ -32,6 +32,9 @@ internal sealed class EncryptedEchoClient : EchoClientBase {
         try{
             var publicKey = Convert.FromBase64String(message);
             rsa.ImportRSAPublicKey(publicKey, out int bytesRead);
+            if(bytesRead < 256){  //2048 bits = 256 bytes
+                throw new CryptographicException("Received key is invalid");
+            }
         }catch(CryptographicException e){
             Console.WriteLine("Exception caught: {0}", e);
         }
@@ -52,13 +55,12 @@ internal sealed class EncryptedEchoClient : EchoClientBase {
         // Use the SHA256 variant of HMAC.
         // Use a different key each time.
         byte[] randomHmacKey = RandomNumberGenerator.GetBytes(32);
-        HMACSHA256 hmac = new HMACSHA256(randomHmacKey); 
-        byte[] hmacHash = hmac.ComputeHash(data); 
+        byte[] hmacHash = HMACSHA256.HashData(randomHmacKey, data);
 
         // todo: Step 3: Encrypt the message encryption and HMAC keys using RSA.
         // Encrypt using the OAEP padding scheme with SHA256.
         byte[] aesEncryptKey = rsa.Encrypt(aes.Key, RSAEncryptionPadding.OaepSHA256);
-        byte[] hmacEncryptKey = rsa.Encrypt(hmac.Key, RSAEncryptionPadding.OaepSHA256);
+        byte[] hmacEncryptKey = rsa.Encrypt(randomHmacKey, RSAEncryptionPadding.OaepSHA256);
 
         // todo: Step 4: Put the data in an EncryptedMessage object and serialize to JSON.
         // Return that JSON.
@@ -76,7 +78,7 @@ internal sealed class EncryptedEchoClient : EchoClientBase {
         // Throw an InvalidSignatureException if the signature is bad.
         bool signatureMatching = rsa.VerifyData(signedMessage.Message, signedMessage.Signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pss);
         if(!signatureMatching){
-            throw new InvalidSignatureException();
+            throw new InvalidSignatureException("Signature is invalid");
         }
 
         // todo: Step 3: Return the message from the server.

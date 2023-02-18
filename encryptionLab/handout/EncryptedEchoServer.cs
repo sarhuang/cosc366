@@ -1,4 +1,10 @@
-﻿using System.Security.Cryptography;
+﻿/* Name: Sarah Huang
+ * Date: 2/17/2023
+ * Program: EncryptedEchoServer.cs
+ * Purpose: An echo server receives string from clients and simply echos those strings back to the clients. 
+ */
+
+using System.Security.Cryptography;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 
@@ -15,9 +21,6 @@ internal sealed class EncryptedEchoServer : EchoServerBase {
 
     // todo: Step 1: Generate a RSA key (2048 bits) for the server.
     RSA rsa = RSA.Create(2048);  
-
-
-
 
 
     /// <inheritdoc />
@@ -41,9 +44,9 @@ internal sealed class EncryptedEchoServer : EchoServerBase {
         // todo: Step 3: Verify the HMAC. Use the SHA256 variant of the HMAC algorithm.
         // Throw an InvalidSignatureException if the received hmac is bad.
         byte[] decryptedHmacKey = rsa.Decrypt(message.HMACKeyWrap, RSAEncryptionPadding.OaepSHA256);
-        byte[] decryptedHmacHash = HMACSHA256.HashData(decryptedHmacKey, decryptedMessage);
-        if(!decryptedHmacHash.SequenceEqual(message.HMAC)){
-            throw new InvalidSignatureException();
+        byte[] calculatedHmacHash = HMACSHA256.HashData(decryptedHmacKey, decryptedMessage);
+        if(!calculatedHmacHash.SequenceEqual(message.HMAC)){
+            throw new InvalidSignatureException("Received HMAC is invalid");
         }
         
         // todo: Step 3: Return the decrypted and verified message from the server.
